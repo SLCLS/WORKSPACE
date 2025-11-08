@@ -1,0 +1,18 @@
+{
+    "files.associations": {
+        "cmath": "cpp",
+        "iostream": "cpp",
+        "vector": "cpp",
+        "string": "cpp"
+    },
+    "C_Cpp.default.compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
+    "C_Cpp.default.intelliSenseMode": "gcc-x64",
+    "C_Cpp.default.cppStandard": "c++20",
+    "C_Cpp.default.configurationProvider": "ms-vscode.cpptools",
+    "terminal.integrated.env.windows": {
+        "PATH": "C:\\msys64\\ucrt64\\bin;${env:PATH}"
+    },
+    "code-runner.executorMap": {
+        "cpp": "g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
+    }
+}
