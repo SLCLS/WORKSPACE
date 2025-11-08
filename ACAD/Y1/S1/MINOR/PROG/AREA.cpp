@@ -42,7 +42,7 @@ void numericOnly(const string& prompt, T& value) {
 
 int main()
 {
-    double r_area, r_l, r_w, c_a, c_r;
+    double r_a, r_l, r_w, c_a, c_r;
     string shape, shape_type, again;
 
     cout << "SHAPE AREA CALCULATOR\n\n";
@@ -57,8 +57,8 @@ int main()
         shape_type = "RECTANGLE";
         numericOnly("\nENTER LENGTH: ", r_l);
         numericOnly("\nENTER WIDTH: ", r_w);
-        r_area = Area_Rectangle(r_l, r_w);
-        cout << "\nTHE AREA OF THE " << shape_type << " IS " << fixed << setprecision(2) << r_area;
+        r_a = Area_Rectangle(r_l, r_w);
+        cout << "\nTHE AREA OF THE " << shape_type << " IS " << fixed << setprecision(2) << r_a;
     }
     else if (shape == "C" || shape == "c")
     {
