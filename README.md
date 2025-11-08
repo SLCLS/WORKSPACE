@@ -1,7 +1,8 @@
 ### **TUBIG MARKA NI SHANTIDOPE**
 
 ### VIRTUAL ENVIRONMENT SETUP
-1. Activate virtual environment: ".venv\Scripts\activate" for Windows, "source .venv/bin/activate" for Codespace.
+1. "python -m venv .venv"
+2. Activate virtual environment: ".venv\Scripts\activate" for Windows, "source .venv/bin/activate" for Codespace.
 3. Recreate dependencies by running "pip install -r requirements.txt"
 
 ### Updating requirements.txt
