@@ -1,47 +1,75 @@
-import math
+"""ANGLE FORMED BY TANGENTS
 
-#ANGLE FORMED BY TANGENTS
-#VALUES
-major_arc = int(input("Major Arc value: ") or 0)
-major_arc = major_arc if major_arc != 0 else None
+Interactive helper to compute the relation between a major arc and the angle formed by two tangents.
 
-formed_angle = int(input("Formed Angle Value: ") or 0)
-formed_angle = formed_angle if formed_angle != 0 else None
+Rules used:
+- If both values are missing -> error.
+- If both provided -> validate that major_arc == formed_angle + 180.
+- If only one is provided -> compute the other:
+    formed_angle = major_arc - 180  (when major_arc given)
+    major_arc = formed_angle + 180  (when formed_angle given)
 
-#CONDITIONS
-if major_arc is None and formed_angle is None:
-    print("ERROR: No data was given.")
-elif major_arc is not None and formed_angle is not None and major_arc != formed_angle + 180:
-    print("ERROR: Major Arc should be equal to formed angle plus 180 degrees.")
-elif major_arc is not None and formed_angle is not None and major_arc == formed_angle + 180:
-    print("Correct value is already given.")
-else:
-    pass
+This version avoids arithmetic on None and provides clearer messages.
+"""
 
-#CALCULATION
-if major_arc is None and formed_angle is None:
-    pass
-elif major_arc is not None and formed_angle is not None and major_arc != formed_angle + 180:
-    pass
-elif major_arc is not None and formed_angle is not None and major_arc == formed_angle + 180:
-    pass
-else:
-    if formed_angle is None:
-        #FIND MAJOR ARC
-        f_angle = major_arc - 180
+def _parse_int_or_none(prompt: str):
+    s = input(prompt).strip()
+    if s == "":
+        return None
+    try:
+        return int(s)
+    except ValueError:
+        print(f"Warning: '{s}' is not a valid integer. Treating as missing (None).")
+        return None
+
+
+def compute_missing(major_arc, formed_angle):
+    """Compute/validate relationship between major_arc and formed_angle.
+
+    Returns a tuple (major_arc, formed_angle, message).
+    If computation succeeds, message is None and the returned values include computed ones.
+    If there's an error or validation message, message contains it and values are returned as-is
+    (with None where appropriate).
+    """
+    # both missing
+    if major_arc is None and formed_angle is None:
+        return (None, None, "ERROR: No data was given.")
+
+    # both provided -> validate
+    if major_arc is not None and formed_angle is not None:
+        if major_arc != formed_angle + 180:
+            return (major_arc, formed_angle, "ERROR: Major Arc should be equal to formed angle plus 180 degrees.")
+        return (major_arc, formed_angle, "Correct value is already given.")
+
+    # only major_arc provided -> compute formed_angle
+    if major_arc is not None:
+        return (major_arc, major_arc - 180, None)
+
+    # only formed_angle provided -> compute major_arc
+    return (formed_angle + 180, formed_angle, None)
+
+
+def main():
+    major_input = _parse_int_or_none("Major Arc value: ")
+    formed_input = _parse_int_or_none("Formed Angle Value: ")
+
+    major, formed, msg = compute_missing(major_input, formed_input)
+
+    if msg:
+        print(msg)
+        return
+
+    # Determine which value was computed and print only the computed one
+    if major_input is None and formed_input is not None:
+        # computed major arc
+        print(major)
+    elif formed_input is None and major_input is not None:
+        # computed formed angle
+        print(formed)
     else:
-        #FIND MINOR ARC
-        f_arc = formed_angle + 180
+        # both were provided and validated (message would have been printed earlier)
+        print("No computation needed.")
 
-#FRAMEWORK
-if major_arc is None and formed_angle is None:
-    pass
-elif major_arc is not None and formed_angle is not None and major_arc != formed_angle + 180:
-    pass
-elif major_arc is not None and formed_angle is not None and major_arc == formed_angle + 180:
-    pass
-else:
-    if formed_angle is None:
-        print(f_angle)
-    else:
-        print(f_arc)
+
+if __name__ == "__main__":
+    main()
