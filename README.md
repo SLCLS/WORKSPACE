@@ -9,5 +9,9 @@
 2. Install the libraries.
 3. "pip freeze > requirements.txt" once again.
 
+### Updating requirements libraries.
+1. "pip install --upgrade -r requirements.txt"
+2. "pip freeze > requirements.txt" once again.
+
 ### Dev Container
 1. Open in VS Code → “Reopen in Container”.
