@@ -1,5 +1,10 @@
 ### **TUBIG MARKA NI SHANTIDOPE**
 
+### WORKFLOW SETUP
+1. python -m venv .venv
+2. "source .venv/bin/activate" (Codespace) / ".venv\Scripts\activate" (Windows)
+3. pip install -r requirements.txt
+
 ### VIRTUAL ENVIRONMENT SETUP
 1. "python -m venv .venv"
 2. Activate virtual environment: ".venv\Scripts\activate" for Windows, "source .venv/bin/activate" for Codespace.
