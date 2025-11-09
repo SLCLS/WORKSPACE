@@ -8,12 +8,12 @@
     },
 
     // --- C++ Compiler Configuration ---
-    "C_Cpp.default.compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
+    "C_Cpp.default.compilerPath": "${env:COMPILER_PATH}",
     "C_Cpp.default.intelliSenseMode": "gcc-x64",
     "C_Cpp.default.cppStandard": "c++20",
     "C_Cpp.default.configurationProvider": "ms-vscode.cpptools",
 
-    // --- Ensure MSYS2 tools are in PATH for terminal ---
+    // --- Ensure MSYS2 tools are in PATH for Windows ---
     "terminal.integrated.env.windows": {
         "PATH": "C:\\msys64\\ucrt64\\bin;${env:PATH}"
     },
@@ -22,7 +22,7 @@
     "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
     "python.terminal.activateEnvironment": true,
 
-    // --- Code Runner Executor Map for Python and C++ ---
+    // --- Code Runner Executor Map for Python + C++ ---
     "code-runner.executorMap": {
         "python": "python -u",
         "cpp": "g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
