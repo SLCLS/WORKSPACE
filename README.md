@@ -22,7 +22,7 @@
 1. `pip install --upgrade -r requirements.txt`
 2. `pip freeze > requirements.txt` once again.
 
-### **RUNNING PROGRAMS USING MAKE**
+## **RUNNING PROGRAMS USING MAKE**
 - `make run-cpp file=<file-path>` for C++ Programs.
 - `make run-py file=<file-path>` for Python Programs.
 
