@@ -1,3 +1,7 @@
+# pylint: disable-all  # For Pylint: Disables all checks for this file
+# flake8: noqa  # For Flake8: Ignores all errors for this file
+# type: ignore
+
 import sys
 # SYS is used for Pthon runtime environment (e.g. version, path, etc.)
 import random
