@@ -10,10 +10,15 @@ __pycache__/
 # Build artifacts
 *.exe
 *.out
+*.obj
+*.o
 
-# VS Code local settings (optional)
+# VS Code local settings
 .vscode/
 
 # System files
 .DS_Store
 Thumbs.db
+
+# --- Node ---
+node_modules/
