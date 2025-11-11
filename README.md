@@ -1,30 +1,31 @@
-# **TUBIG MARKA NI SHANTIDOPE**
+# <h2><p align="center">**🔥😍 TUBIG MARKA NI SHANTIDOPE 😍🔥**</p></h2>
 
-## **WORKFLOW SETUP**
-1. `python -m venv .venv`
-2. `source .venv/bin/activate` (Codespace) / `.venv\Scripts\activate` (Windows)
-3. `pip install -r requirements.txt`
 
-## **VIRTUAL ENVIRONMENT SETUP**
-1. `python -m venv .venv`
-2. Activate virtual environment: `.venv\Scripts\activate` for Windows, `source .venv/bin/activate` for Codespace.
-3. Recreate dependencies by running `pip install -r requirements.txt`
 
-## **Dev Container**
-1. Open in VS Code → “Reopen in Container”.
+## CROSS-PLATFORM WORKSPACE
 
-## **Updating requirements.txt**
-1. Activate your virtual environment (if not already) `.venv\Scripts\activate`.
-2. Install the libraries.
-3. `pip freeze > requirements.txt` once again.
+This repository serves as a personal cross-platform ( **_VS Code_ & _GitHub Codespace_** ) repository and developer environment setup for both ***Windows 10/11*** and ***Linux devices or Virtual Machines***.
 
-## **Updating requirements libraries.**
-1. `pip install --upgrade -r requirements.txt`
-2. `pip freeze > requirements.txt` once again.
+> Supports seamless virtual environment (venv) creation with compiled standard utility libraries for both Python (3.13.0) and C++ (23, 14882 : 2024).
 
-## **RUNNING PROGRAMS USING MAKE**
-- `make run-cpp file=<file-path>` for C++ Programs.
-- `make run-py file=<file-path>` for Python Programs.
+> High Visual Studio Code environment customization (for both personalization & execution utility) under the .vscode module in root.
 
-## **REINSTALLING DEPENDENCIES**
-- `make install`
+> Fully tested and standardized developer container for docker and Linux environment as well as flexible Makefile that supports Windows & Linux.
+
+## USAGE & SETUP
+For a detailed usage & setup documentation, see [SETUP_GUIDE.md](https://github.com/SLCLS/WORKSPACE/blob/main/SETUP_GUIDE.md). 😉
+
+## PLANNED FEATURES
+1. **COMPLETED**
+    - [x] Support for VS Code in both Windows and Linux Environment.
+    - [x] Standard setup for GitIgnore, Makefile, and other Utilities.
+    - [x] Venv, DevContainer, and VSCode Customization (in root).
+
+2. **TO BE COMPLETED**
+    - [ ] Pre-commit hooks, Code Style & Formatting, Version Control Enhancements.
+    - [ ] Support for Jupiter Notebook & other IDE.
+    - [ ] Support for Javascript & other languages.
+    - [ ] GitHub Actions (CI) Workflows.
+
+# <h4><p align="center">**_MADE BY:_ <span style="color: cyan;">SHAN KENNETH BAYON-ON<span/>**</p></h4>
+#
