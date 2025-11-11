@@ -1,4 +1,4 @@
-# <h2><p align="center">**🔥😍 TUBIG MARKA NI SHANTIDOPE 😍🔥**</p></h2>
+# <h2><p align="center">**🔥😍🥵 TUBIG MARKA NI SHANTIDOPE 🥵😍🔥**</p></h2>
 
 
 
@@ -26,6 +26,3 @@ For a detailed usage & setup documentation, see [SETUP_GUIDE.md](https://github.
     - [ ] Support for Jupiter Notebook & other IDE.
     - [ ] Support for Javascript & other languages.
     - [ ] GitHub Actions (CI) Workflows.
-
-# <h4><p align="center">**_MADE BY:_ <span style="color: cyan;">SHAN KENNETH BAYON-ON<span/>**</p></h4>
-#
