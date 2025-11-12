@@ -1,7 +1,6 @@
 # <h2><p align="center">**🔥😍🥵 TUBIG MARKA NI SHANTIDOPE 🥵😍🔥**</p></h2>
 
 ## CROSS-PLATFORM WORKSPACE
-
 This repository serves as a personal cross-platform ( **_VS Code_ & _GitHub Codespace_** ) repository and developer environment setup for both ***Windows 10/11*** and ***Linux devices or Virtual Machines***.
 
 > Supports seamless virtual environment (venv) creation with compiled standard utility libraries for both Python (3.13.0) and C++ (23, 14882 : 2024).
@@ -10,13 +9,13 @@ This repository serves as a personal cross-platform ( **_VS Code_ & _GitHub Code
 
 > Fully tested and standardized developer container for docker and Linux environment as well as flexible Makefile that supports Windows & Linux.
 
-## USAGE & SETUP
-For a detailed usage & setup documentation, see [SETUP_GUIDE.md](https://github.com/SLCLS/WORKSPACE/blob/main/SETUP_GUIDE.md). 😉
-
-## DEVELOPMENT HIGHLIGHT
+## MY DEVELOPMENT HIGHLIGHT
 | PROGRAM  | FEATURE OVERVIEW |
 | :-------------------: | :---------- |
 | **[Arrow-Solver](https://github.com/SLCLS/WORKSPACE/tree/main/PERSONAL/PYTHON/MAJOR/ARROW-SOLVER)** | This Python program can solve **Arrow Puzzle** in ***Hard difficulty*** automatically for the game **"Exponential Idle"** using **cv2 (OpenCV)** for *Puzzle Mapping* and **PpADB (Pure Python ADB)** for *Automation*.. It implements Computer Vision using **CV2** and it process the image to recognize the puzzle Circles and it's color on the screen. **PpADB** is then used for Android integration, thus, this program works for **Android devices only** |
+
+## USAGE & SETUP
+For a detailed usage & setup documentation, see [SETUP_GUIDE.md](https://github.com/SLCLS/WORKSPACE/blob/main/SETUP_GUIDE.md). 😉
 
 ## PLANNED FEATURES
 1. **COMPLETED**
