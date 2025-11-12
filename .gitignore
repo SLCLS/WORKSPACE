@@ -22,3 +22,9 @@ Thumbs.db
 
 # --- Node ---
 node_modules/
+
+# Secrets
+private_docs/
+private/
+secrets/
+.env
