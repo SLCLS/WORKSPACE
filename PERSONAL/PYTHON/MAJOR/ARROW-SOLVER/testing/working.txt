@@ -1,0 +1,111 @@
+import cv2
+import numpy as np
+import os
+from anroid_connector import get_screenshot, image_path
+
+def find_circles(image: np.ndarray) -> list[list[int]]:
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    blurred_image = cv2.GaussianBlur(gray_image, (9, 9), 2)
+
+    # Detect circles with the specified minimum diameter (153px corresponds to radius 76.5px)
+    circles = cv2.HoughCircles(
+        blurred_image,
+        cv2.HOUGH_GRADIENT,
+        dp=1.2,
+        minDist=20,
+        param1=50,
+        param2=30,
+        minRadius=76,  # Minimum radius (half of 153px diameter)
+        maxRadius=77  # Slightly larger radius for flexibility
+    )
+
+    circles_list = []
+    if circles is not None:
+        circles = np.round(circles[0, :]).astype("int")
+        for (x, y, r) in circles:
+            circles_list.append([x, y, r])
+            # Draw the circle in the output image
+            cv2.circle(image, (x, y), r, (0, 255, 0), 2)
+            # Draw the circle's center
+            cv2.circle(image, (x, y), 2, (0, 0, 255), 3)
+
+    return circles_list
+
+def get_color_at_half_radius_north(image: np.ndarray, circle: list[int]) -> list[int]:
+    x, y, r = circle
+    north_half_radius_point = image[y - r // 2, x]  # Color at half the radius north of the circle's center
+    return north_half_radius_point
+
+def process_image():
+    print("Capturing screenshot...")
+    get_screenshot()
+    print(f"Attempting to read image from {image_path}")
+    image = cv2.imread(image_path)
+
+    if image is None:
+        raise FileNotFoundError(f"Image file not found at {image_path}")
+    print("Image loaded successfully.")
+
+    circles_list = find_circles(image)
+    print(f"Detected {len(circles_list)} circles.")
+
+    if len(circles_list) != 37:
+        raise ValueError(f"Expected 37 circles, but found {len(circles_list)}")
+
+    # Create result variables
+    result = circles_list
+    result_value = []
+    Upward_Circle = 0
+    Downward_Circle = 0
+
+    for circle in circles_list:
+        color = get_color_at_half_radius_north(image, circle)
+        # Convert color to integer RGB values
+        color_int = int(color[0]), int(color[1]), int(color[2])
+        print(f"Detected color: {color_int}")
+
+        # Determine if the color is dark or light
+        if np.array_equal(color_int, (0, 0, 0)):  # Dark color (Upward)
+            result_value.append(0)
+            Upward_Circle += 1
+        elif np.array_equal(color_int, (68, 68, 68)):  # Light color (Downward)
+            result_value.append(1)
+            Downward_Circle += 1
+        else:
+            print(f"Unexpected color detected: {color_int}")
+
+    print("Finished processing circles.")
+
+    # Save the image with detected circles to a file
+    output_image_path = "detected_circles.jpg"
+    cv2.imwrite(output_image_path, image)
+    print(f"Image with detected circles saved to {output_image_path}")
+
+    # Scale the image to 35% of its original size
+    scale_percent = 35
+    width = int(image.shape[1] * scale_percent / 100)
+    height = int(image.shape[0] * scale_percent / 100)
+    dim = (width, height)
+    resized_image = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
+
+    # Display the saved image
+    saved_image = cv2.imread(output_image_path)
+    cv2.imshow("Detected Circles", resized_image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+    # Delete the saved image file
+    os.remove(output_image_path)
+    print(f"Deleted the saved image file {output_image_path}")
+
+    print("Returning results.")
+    return result, result_value, Upward_Circle, Downward_Circle
+
+if __name__ == "__main__":
+    print("Starting image processing...")
+    result, result_value, Upward_Circle, Downward_Circle = process_image()
+    print("Result:", result)
+    print("Result Value:", result_value)
+    print("Upward Circle:", Upward_Circle)
+    print("Downward Circle:", Downward_Circle)
+    print("Finished image processing.")

@@ -1,0 +1,57 @@
+import cv2
+import numpy as np
+import os
+from anroid_connector import get_screenshot, image_path
+
+def find_circles(image: np.ndarray) -> list[list[int]]:
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    blurred_image = cv2.GaussianBlur(gray_image, (9, 9), 2)
+
+    circles = cv2.HoughCircles(
+        blurred_image,
+        cv2.HOUGH_GRADIENT,
+        dp=1.2,
+        minDist=20,
+        param1=50,
+        param2=30,
+        minRadius=76,
+        maxRadius=77
+    )
+
+    circles_list = []
+    if circles is not None:
+        circles = np.round(circles[0, :]).astype("int")
+        for (x, y, r) in circles:
+            circles_list.append([x, y, r])
+    return circles_list
+
+
+def get_color_at_half_radius_north(image: np.ndarray, circle: list[int]) -> list[int]:
+    x, y, r = circle
+    return image[y - r // 2, x]  # Get color above the circle center
+
+
+def process_image():
+    get_screenshot()
+    image = cv2.imread(image_path)
+    if image is None:
+        raise FileNotFoundError(f"Image file not found at {image_path}")
+
+    circles_list = find_circles(image)
+    if len(circles_list) != 37:
+        raise ValueError(f"Expected 37 circles, but found {len(circles_list)}")
+
+    result = []
+    result_value = []
+    for circle in circles_list:
+        color = get_color_at_half_radius_north(image, circle)
+        color_int = tuple(map(int, color))
+        if np.array_equal(color_int, (0, 0, 0)):
+            result_value.append(0)  # Upward
+        elif np.array_equal(color_int, (68, 68, 68)):
+            result_value.append(1)  # Downward
+        else:
+            raise ValueError(f"Unexpected color: {color_int}")
+        result.append(circle[:2])  # Append (x, y) only
+
+    return result, result_value, result_value.count(0), result_value.count(1)

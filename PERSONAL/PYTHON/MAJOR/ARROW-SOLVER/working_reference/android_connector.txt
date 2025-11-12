@@ -1,0 +1,45 @@
+from ppadb.client import Client as AdbClient
+import os
+import cv2
+import numpy as np
+
+client = AdbClient(host="127.0.0.1", port=5037)  # start client
+devices = client.devices()  # get list of connected devices
+
+if not devices:
+    raise RuntimeError("No devices connected. Please ensure your device is connected and ADB is running.")
+
+device = devices[0]  # get first connected device
+
+# Use raw string to avoid unicode escape issues
+image_path = r"C:\WORKSPACE\ARROW-SOLVER\images\screen.jpg"
+
+def get_screenshot():
+    print("Detecting Puzzle...")
+    result = device.screencap()
+    print("Puzzle Detected.")
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(image_path), exist_ok=True)
+    with open(image_path, "wb") as fp:
+        fp.write(result)
+    print(f"Capture image saved to {image_path}")
+    # Verify the file exists
+    if os.path.exists(image_path):
+        print(f"Image existence confirmed!")
+    else:
+        print(f"Failed to access the image at {image_path}")
+
+    # Load the image and crop it
+    image = cv2.imread(image_path)
+    image_height, image_width = image.shape[:2]
+    adjusted_crop_top = 600
+    adjusted_crop_bottom = 400
+    cropped_image = image[adjusted_crop_top:image_height-adjusted_crop_bottom, 0:image_width]
+    cv2.imwrite(image_path, cropped_image)
+    print(f"Cropped image saved to {image_path}")
+
+def tap_screen(x: int, y: int):
+    device.shell(f"input tap {x} {y}")
+
+def restart_game():
+    device.shell(f"input tap {360} {1340}")

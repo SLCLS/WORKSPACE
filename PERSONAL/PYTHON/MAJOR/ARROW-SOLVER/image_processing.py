@@ -1,0 +1,78 @@
+import cv2
+import numpy as np
+import os
+from anroid_connector import get_screenshot, image_path
+
+def find_circles(image: np.ndarray) -> list[list[int]]:
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    blurred_image = cv2.GaussianBlur(gray_image, (9, 9), 2)
+
+    circles = cv2.HoughCircles(
+        blurred_image,
+        cv2.HOUGH_GRADIENT,
+        dp=1.2,
+        minDist=20,
+        param1=50,
+        param2=30,
+        minRadius=76,
+        maxRadius=77,
+    )
+
+    circles_list = []
+    if circles is not None:
+        circles = np.round(circles[0, :]).astype("int")
+        for (x, y, r) in circles:
+            circles_list.append([x, y, r])
+            cv2.circle(image, (x, y), r, (0, 255, 0), 2)
+            cv2.circle(image, (x, y), 2, (0, 0, 255), 3)
+
+    return circles_list
+
+def get_color_at_half_radius_north(image: np.ndarray, circle: list[int]) -> list[int]:
+    x, y, r = circle
+    return image[y - r // 2, x]
+
+def process_image():
+    print("Capturing screenshot...")
+    get_screenshot()
+    print(f"Attempting to read image from {image_path}")
+    image = cv2.imread(image_path)
+
+    if image is None:
+        raise FileNotFoundError(f"Image file not found at {image_path}")
+
+    print("Image loaded successfully.")
+    circles_list = find_circles(image)
+    print(f"Detected {len(circles_list)} circles.")
+
+    if len(circles_list) != 37:
+        raise ValueError(f"Expected 37 circles, but found {len(circles_list)}")
+
+    result = []
+    result_value = []
+    upward_circle_count = 0
+    downward_circle_count = 0
+
+    for circle in circles_list:
+        color = get_color_at_half_radius_north(image, circle)
+        color_int = tuple(map(int, color))
+        print(f"Detected color: {color_int}")
+
+        if np.array_equal(color_int, (0, 0, 0)):  # Dark color (Upward)
+            result.append([circle[0], circle[1], circle[2]])
+            result_value.append(0)
+            upward_circle_count += 1
+        elif np.array_equal(color_int, (68, 68, 68)):  # Light color (Downward)
+            result.append([circle[0], circle[1], circle[2]])
+            result_value.append(1)
+            downward_circle_count += 1
+        else:
+            print(f"Unexpected color detected: {color_int}")
+
+    print("Finished processing circles.")
+
+    output_image_path = "detected_circles.jpg"
+    cv2.imwrite(output_image_path, image)
+    print(f"Image with detected circles saved to {output_image_path}")
+
+    return result, result_value, upward_circle_count, downward_circle_count

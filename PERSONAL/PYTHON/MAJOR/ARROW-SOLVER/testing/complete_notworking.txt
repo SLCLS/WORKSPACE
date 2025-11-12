@@ -1,0 +1,119 @@
+import cv2
+import numpy as np
+from anroid_connector import get_screenshot, image_path
+
+def find_circles(image: np.ndarray) -> list[list[int]]:
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    blurred_image = cv2.GaussianBlur(gray_image, (9, 9), 2)
+
+    # Detect circles with the specified minimum diameter (153px corresponds to radius 76.5px)
+    circles = cv2.HoughCircles(
+        blurred_image,
+        cv2.HOUGH_GRADIENT,
+        dp=1.2,
+        minDist=20,
+        param1=50,
+        param2=30,
+        minRadius=76,  # Minimum radius (half of 153px diameter)
+        maxRadius=77  # Slightly larger radius for flexibility
+    )
+
+    circles_list = []
+    if circles is not None:
+        circles = np.round(circles[0, :]).astype("int")
+        for (x, y, r) in circles:
+            circles_list.append([x, y, r])
+            # Draw the circle in the output image
+            cv2.circle(image, (x, y), r, (0, 255, 0), 2)
+            # Draw the circle's center
+            cv2.circle(image, (x, y), 2, (0, 0, 255), 3)
+
+    return circles_list
+
+def get_most_prominent_color(image: np.ndarray, circle: list[int]) -> list[int]:
+    x, y, r = circle
+    mask = np.zeros(image.shape[:2], dtype="uint8")
+    cv2.circle(mask, (x, y), r, 255, -1)
+    masked_image = cv2.bitwise_and(image, image, mask=mask)
+    colors, counts = np.unique(masked_image.reshape(-1, 3), axis=0, return_counts=True)
+    most_prominent_color = colors[counts.argmax()]
+    return most_prominent_color
+
+def process_image():
+    print("Capturing screenshot...")
+    get_screenshot()
+    print(f"Attempting to read image from {image_path}")
+    image = cv2.imread(image_path)
+
+    if image is None:
+        raise FileNotFoundError(f"Image file not found at {image_path}")
+    print("Image loaded successfully.")
+
+    circles_list = find_circles(image)
+    print(f"Detected {len(circles_list)} circles.")
+
+    if len(circles_list) != 37:
+        raise ValueError(f"Expected 37 circles, but found {len(circles_list)}")
+
+    # Create result variables
+    result = circles_list
+    result_value = []
+    Upward_Circle = 0
+    Downward_Circle = 0
+    circle_0 = circle_1 = circle_2 = circle_3 = circle_4 = circle_5 = 0
+
+    for circle in circles_list:
+        color = get_most_prominent_color(image, circle)
+        if np.array_equal(color, [90, 90, 90]):  # Assuming red is downward
+            result_value.append(1)
+            Downward_Circle += 1
+        else:  # Assuming other colors are upward
+            result_value.append(0)
+            Upward_Circle += 1
+
+        # For expert arrow colors
+        if np.array_equal(color, [30, 30, 30]):
+            circle_0 += 1
+        elif np.array_equal(color, [40, 40, 40]):
+            circle_1 += 1
+        elif np.array_equal(color, [50, 50, 50]):
+            circle_2 += 1
+        elif np.array_equal(color, [70, 70, 70]):
+            circle_3 += 1
+        elif np.array_equal(color, [80, 80, 80]):
+            circle_4 += 1
+        elif np.array_equal(color, [90, 90, 90]):
+            circle_5 += 1
+
+    print("Finished processing circles.")
+
+    # Scale the image to 40% of its original size
+    scale_percent = 40
+    width = int(image.shape[1] * scale_percent / 100)
+    height = int(image.shape[0] * scale_percent / 100)
+    dim = (width, height)
+    resized_image = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
+
+    print("Displaying the image with detected circles.")
+    # Display the image with detected circles
+    cv2.imshow("Detected Circles", resized_image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+    print("Returning results.")
+    return result, result_value, Upward_Circle, Downward_Circle, circle_0, circle_1, circle_2, circle_3, circle_4, circle_5
+
+if __name__ == "__main__":
+    print("Starting image processing...")
+    result, result_value, Upward_Circle, Downward_Circle, circle_0, circle_1, circle_2, circle_3, circle_4, circle_5 = process_image()
+    print("Result:", result)
+    print("Result Value:", result_value)
+    print("Upward Circle:", Upward_Circle)
+    print("Downward Circle:", Downward_Circle)
+    print("Circle 0:", circle_0)
+    print("Circle 1:", circle_1)
+    print("Circle 2:", circle_2)
+    print("Circle 3:", circle_3)
+    print("Circle 4:", circle_4)
+    print("Circle 5:", circle_5)
+    print("Finished image processing.")

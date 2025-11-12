@@ -1,0 +1,59 @@
+import cv2
+import time
+from anroid_connector import get_screenshot, image_path, tap_screen, restart_game
+from image_processing import process_image
+from tile import Tile, find_neighbours
+
+# Define neighbours for the 37 tiles
+neighbours_list = [find_neighbours(i) for i in range(37)]
+# Pagination indexes for the puzzle
+pagination_indexes = [7, 12, 18, 24, 29, 33]
+# List to store tap actions for debugging
+taps_list = []
+
+# Add a delay threshold (300ms)
+DELAY_BETWEEN_TAPS = 0.3
+
+def paginate(grid: list[Tile], max_color):
+    for index in pagination_indexes:
+        current_index = index
+        while current_index is not None:
+            counter = 0
+            while grid[neighbours_list[current_index].top].color != 0:
+                counter += 1
+                for i in neighbours_list[current_index].get_all_indexes():
+                    grid[i].tap(max_color)
+            taps_list.append((grid[current_index].x, grid[current_index].y, counter))
+            current_index = neighbours_list[current_index].l2
+
+        current_index = neighbours_list[index].r2
+        while current_index is not None:
+            counter = 0
+            while grid[neighbours_list[current_index].top].color != 0:
+                counter += 1
+                for i in neighbours_list[current_index].get_all_indexes():
+                    grid[i].tap(max_color)
+            taps_list.append((grid[current_index].x, grid[current_index].y, counter))
+            current_index = neighbours_list[current_index].r2
+
+def solve_puzzle_on_phone(max_color, max_taps):
+    get_screenshot()
+    result, result_value, Upward_Circle, Downward_Circle = process_image()
+    grid = [Tile(x, y, color) for (x, y, _), color in zip(result, result_value)]  # Unpack three values
+
+    for _ in range(max_taps):
+        paginate(grid, max_color)
+        for x, y, _ in taps_list:
+            print(f"Tapping at ({x}, {y})")  # Print the tap list for debugging
+            tap_screen(x, y)
+            time.sleep(DELAY_BETWEEN_TAPS)  # Add delay to ensure taps register
+
+        taps_list.clear()
+        get_screenshot()
+        result, result_value, Upward_Circle, Downward_Circle = process_image()
+        grid = [Tile(x, y, color) for (x, y, _), color in zip(result, result_value)]  # Unpack three values
+
+    restart_game()
+
+if __name__ == "__main__":
+    solve_puzzle_on_phone(6, 1)
