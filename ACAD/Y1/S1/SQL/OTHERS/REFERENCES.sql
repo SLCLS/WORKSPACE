@@ -1,6 +1,4 @@
-/* ==============================
-   SQL COMMANDS REFERENCE EXAMPLES
-   ============================== */
+/* SQL COMMANDS REFERENCE EXAMPLES */
 
 /* --- AND / OR --- */
 SELECT column_name(s)
