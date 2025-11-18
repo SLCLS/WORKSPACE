@@ -4,6 +4,8 @@
 #include <cstdlib>
 using namespace std;
 
+// Tubig marka ni shantidope
+
 int main(){
     int magic, guess;
     magic = rand();
