@@ -17,6 +17,10 @@ This repository serves as a personal cross-platform ( **_VS Code_ & _GitHub Code
 ## USAGE & SETUP
 For a detailed usage & setup documentation, see [SETUP_GUIDE.md](https://github.com/SLCLS/WORKSPACE/blob/main/SETUP_GUIDE.md). 😉
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/friendly-space-tribble-7xxqx5wxg4qhxgvg?editor=web)
+[<img src="assets/VS_Code.webp" alt="Open in VS Code" width="61" />](https://github.com/codespaces/friendly-space-tribble-7xxqx5wxg4qhxgvg?editor=vscode)
+[<img src="assets/Jupiter_Lab.png" alt="Open in Jupyter Lab" width="68" />](https://github.com/codespaces/friendly-space-tribble-7xxqx5wxg4qhxgvg?editor=jupyter)
+
 ## PLANNED FEATURES
 1. **COMPLETED**
     - [x] Support for VS Code in both Windows and Linux Environment.
