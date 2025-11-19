@@ -28,3 +28,4 @@ For a detailed usage & setup documentation, see [SETUP_GUIDE.md](https://github.
     - [ ] Support for Jupiter Notebook & other IDE.
     - [ ] Support for Javascript & other languages.
     - [ ] GitHub Actions (CI) Workflows.
+    - [ ] CMake replacement.
