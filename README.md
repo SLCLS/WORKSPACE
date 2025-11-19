@@ -19,7 +19,7 @@ For a detailed usage & setup documentation, see [SETUP_GUIDE.md](https://github.
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/friendly-space-tribble-7xxqx5wxg4qhxgvg?editor=web)
 [<img src="assets/VS_Code.webp" alt="Open in VS Code" width="61" />](https://github.com/codespaces/friendly-space-tribble-7xxqx5wxg4qhxgvg?editor=vscode)
-[<img src="assets/Jupiter_Lab.png" alt="Open in Jupyter Lab" width="63" />](https://github.com/codespaces/friendly-space-tribble-7xxqx5wxg4qhxgvg?editor=jupyter)
+[<img src="assets/Jupiter_Lab.png" alt="Open in Jupyter Lab" width="64" />](https://github.com/codespaces/friendly-space-tribble-7xxqx5wxg4qhxgvg?editor=jupyter)
 
 ## PLANNED FEATURES
 1. **COMPLETED**
