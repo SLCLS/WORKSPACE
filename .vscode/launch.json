@@ -2,15 +2,35 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "C++ Run (External Terminal)",
+            "name": "C++ Run (External PowerShell on Windows)",
             "type": "cppdbg",
             "request": "launch",
+
+            // --- Cross-platform executable path ---
             "program": "${fileDirname}/${fileBasenameNoExtension}${execExt}",
+
             "cwd": "${fileDirname}",
+
+            // --- External terminal only on Windows ---
             "externalConsole": true,
+
+            // --- Windows uses gdb from MSYS2 ---
             "MIMode": "gdb",
             "miDebuggerPath": "gdb",
+
             "preLaunchTask": "C/C++: Build active file",
+
+            // --- Open external terminal using PowerShell on Windows ---
+            "windows": {
+                "externalConsole": true,
+                "postDebugTask": "pause-window"
+            },
+
+            // --- For Linux/Codespaces ---
+            "linux": {
+                "externalConsole": false
+            },
+
             "environment": [],
             "setupCommands": [
                 {

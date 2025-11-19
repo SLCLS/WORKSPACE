@@ -10,7 +10,7 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}.exe",
+                "${fileDirname}/${fileBasenameNoExtension}${execExt}",
                 "-std=c++20"
             ],
             "options": {
@@ -22,6 +22,20 @@
                 "isDefault": true
             },
             "detail": "Cross-compatible build task for Windows & Codespace"
+        },
+
+        // --- Pauses the PowerShell window after program exits (Windows only) ---
+        {
+            "label": "pause-window",
+            "type": "shell",
+            "command": "powershell",
+            "args": ["-Command", "Read-Host 'Press ENTER to exit'"],
+            "presentation": {
+                "echo": false,
+                "reveal": "never",
+                "focus": false,
+                "panel": "dedicated"
+            }
         }
     ]
 }
